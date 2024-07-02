@@ -20,6 +20,16 @@ public class CollectionService {
     }
 
     /**
+     * Should return all possible pairs
+     * @param numberList Example: [1,2,3]
+     * @param stringList Example: [a,b,c]
+     * @return Expected Output: [1a,1b,1c,2a,2b,2c,3a,3b,3c]
+     */
+    public List<String> findAllPairs(List<Integer> numberList, List<String> stringList) {
+        return null;
+    }
+
+    /**
      * Create a List of person DTO with the same number of persons given as input
      * @param persons List of {@link Person} class
      * @return List of {@link PersonDto} class of the same size as input
@@ -53,6 +63,15 @@ public class CollectionService {
      * @return {@link Map}
      */
     public Map<String, String> createPhoneBook(List<Person> persons){
+        return Collections.emptyMap();
+    }
+
+    /**
+     * Group the person list by their genders
+     * @param persons
+     * @return
+     */
+    public Map<String, List<PersonDto>> groupPersonListByGender(List<Person> persons){
         return Collections.emptyMap();
     }
 
