@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Component
 public class CollectionService {
@@ -75,6 +76,8 @@ public class CollectionService {
         return Collections.emptyMap();
     }
 
-
+    public Set<String> findAllGenders(List<Person> persons) {
+        return Collections.emptySet();
+    }
 
 }
