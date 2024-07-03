@@ -9,6 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -97,5 +98,14 @@ public class CollectionServiceTest {
         assertEquals(result.size(), 2);
         assertEquals(result.get("Female").size(), 3);
         assertEquals(result.get("Male").size(), 2);
+    }
+
+
+    @Test
+    public void testFindAllGenders() {
+        var fixtures = new PersonFixtures();
+        var rawList = fixtures.getRawList();
+        Set<String> result = collectionService.findAllGenders(rawList);
+        assertEquals(result.size(), 2);
     }
 }
