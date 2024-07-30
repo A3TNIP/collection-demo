@@ -2,13 +2,16 @@ package com.islington.summer.collectiondemo.service;
 
 import com.islington.summer.collectiondemo.model.Person;
 import com.islington.summer.collectiondemo.model.PersonDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class CollectionService {
 
@@ -17,7 +20,7 @@ public class CollectionService {
      * @param personList List of {@link Person} class
      */
     public void displayPersonList(List<Person> personList) {
-
+        personList.forEach(x -> log.info(x.toString()));
     }
 
     /**
@@ -27,7 +30,7 @@ public class CollectionService {
      * @return Expected Output: [1a,1b,1c,2a,2b,2c,3a,3b,3c]
      */
     public List<String> findAllPairs(List<Integer> numberList, List<String> stringList) {
-        return null;
+        return numberList.stream().flatMap(x -> stringList.stream().map(r -> x+r)).toList();
     }
 
     /**
@@ -36,7 +39,7 @@ public class CollectionService {
      * @return List of {@link PersonDto} class of the same size as input
      */
     public List<PersonDto> mapToDto(List<Person> persons){
-        return Collections.emptyList();
+        return persons.stream().map(PersonDto::new).toList();
     }
 
     /**
@@ -45,7 +48,7 @@ public class CollectionService {
      * @return List of {@link Person} class of the same size as input
      */
     public List<Person> mapToPerson(List<PersonDto> personDtoList){
-        return Collections.emptyList();
+        return personDtoList.stream().map(Person::new).toList();
     }
 
     /**
@@ -55,7 +58,7 @@ public class CollectionService {
      * @return
      */
     public String findContactNumberByName(List<Person> personList, String name){
-        return null;
+        return this.createPhoneBook(personList).get(name);
     }
 
     /**
@@ -64,7 +67,7 @@ public class CollectionService {
      * @return {@link Map}
      */
     public Map<String, String> createPhoneBook(List<Person> persons){
-        return Collections.emptyMap();
+        return persons.stream().collect(Collectors.toMap(Person::getName, Person::getContactNumber));
     }
 
     /**
@@ -73,11 +76,11 @@ public class CollectionService {
      * @return
      */
     public Map<String, List<PersonDto>> groupPersonListByGender(List<Person> persons){
-        return Collections.emptyMap();
+        return this.mapToDto(persons).stream().collect(Collectors.groupingBy(PersonDto::getGender, Collectors.toList()));
     }
 
     public Set<String> findAllGenders(List<Person> persons) {
-        return Collections.emptySet();
+        return this.groupPersonListByGender(persons).keySet();
     }
 
 }
