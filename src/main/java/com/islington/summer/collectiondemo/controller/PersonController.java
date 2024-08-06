@@ -4,10 +4,7 @@ import com.islington.summer.collectiondemo.model.Course;
 import com.islington.summer.collectiondemo.model.Person;
 import com.islington.summer.collectiondemo.model.PersonCourseRole;
 import com.islington.summer.collectiondemo.model.Role;
-import com.islington.summer.collectiondemo.repository.CourseRepository;
-import com.islington.summer.collectiondemo.repository.PersonCourseRoleRepository;
-import com.islington.summer.collectiondemo.repository.PersonRepository;
-import com.islington.summer.collectiondemo.repository.RoleRepository;
+import com.islington.summer.collectiondemo.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +18,7 @@ public class PersonController {
     private final RoleRepository roleRepository;
     private final CourseRepository courseRepository;
     private final PersonCourseRoleRepository personCourseRoleRepository;
+    private final CustomPCRRepository customPCRRepository;
 
     @GetMapping("")
     public List<Person> getAllPersons() {
@@ -33,10 +31,15 @@ public class PersonController {
     }
 
     @PutMapping("/{personId}/assign/{assignType}/{referencingId}")
-    public PersonCourseRole assignPerson(@PathVariable Long personId, @PathVariable String assignType, @PathVariable Long referencingId) {
+    public PersonCourseRole assignPerson(@PathVariable Long personId,
+                                         @PathVariable String assignType,
+                                         @PathVariable Long referencingId,
+                                         @RequestParam(required = false, name = "courseId") Long courseId,
+                                         @RequestParam(required = false, name = "roleId") Long roleId
+    ) {
         Person person = personRepository.findById(personId).orElseThrow(() -> new RuntimeException("Person not found"));
 
-        PersonCourseRole personCourseRole = personCourseRoleRepository.findByPerson_Id(personId).orElse(null);
+        PersonCourseRole personCourseRole = this.customPCRRepository.findInstance(personId, courseId, roleId);
 
         if (personCourseRole == null) {
             personCourseRole = new PersonCourseRole();
