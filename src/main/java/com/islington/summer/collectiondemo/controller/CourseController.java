@@ -2,6 +2,8 @@ package com.islington.summer.collectiondemo.controller;
 
 import com.islington.summer.collectiondemo.model.Course;
 import com.islington.summer.collectiondemo.repository.CourseRepository;
+import com.islington.summer.collectiondemo.repository.CustomCourseRepository;
+import com.islington.summer.collectiondemo.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +14,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseRepository courseRepository;
+    private final CourseService courseService;
 
     @GetMapping("")
     public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+        return courseService.getAll();
     }
 
     @PostMapping("")
     public Course saveCourse(@RequestBody Course course) {
-        return courseRepository.save(course);
+        return courseService.save(course);
     }
 
     @PutMapping("{id}")
