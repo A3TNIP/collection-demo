@@ -26,4 +26,12 @@ public class BaseService<T extends BaseEntity> {
     public BaseService(BaseRepository<T> repository) {
         this.repository = repository;
     }
+
+    public Boolean delete(Long id) {
+        return repository.delete(id);
+    }
+
+    public T findById(Long id) {
+        return repository.findOne(id);
+    }
 }

@@ -10,9 +10,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CustomRoleRepository {
-    @PersistenceContext
-    private EntityManager entityManager;
+public class CustomRoleRepository extends BaseRepository<Role> {
+
+    public CustomRoleRepository() {
+        super(Role.class);
+    }
 
     public List<Role> findAllByPage(int page, int size) {
         JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);

@@ -1,12 +1,13 @@
 package com.islington.summer.collectiondemo.repository;
 
 import com.islington.summer.collectiondemo.model.Course;
-import jakarta.persistence.EntityManager;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class CustomCourseRepository extends BaseRepository<Course> {
+
     public CustomCourseRepository() {
         super(Course.class);
     }
+
 }

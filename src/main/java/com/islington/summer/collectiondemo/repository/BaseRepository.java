@@ -15,7 +15,7 @@ import java.util.List;
 
 public class BaseRepository<T extends BaseEntity>{
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
     private final Class<T> domainClass;
 
     public BaseRepository(Class<T> domainClass) {
@@ -40,7 +40,7 @@ public class BaseRepository<T extends BaseEntity>{
 
         // Prepare pagination
         Query query = entityManager.createQuery(criteriaQuery);
-        query.setFirstResult((int) pageable.getOffset());
+        query.setFirstResult((int) pageable.getOffset() * pageable.getPageSize());
         query.setMaxResults(pageable.getPageSize());
         List<T> results = query.getResultList();
 
