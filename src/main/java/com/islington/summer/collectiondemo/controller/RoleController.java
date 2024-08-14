@@ -6,6 +6,7 @@ import com.islington.summer.collectiondemo.repository.RoleRepository;
 import com.islington.summer.collectiondemo.service.BaseService;
 import com.islington.summer.collectiondemo.service.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,4 +38,9 @@ public class RoleController extends BaseController<Role> {
         return roleRepository.findAllByPage(page, size);
     }
 
+    @Override
+    @PreAuthorize("hasRole('ROLE_TEACHER')")
+    public List<Role> findAll() {
+        return super.findAll();
+    }
 }
